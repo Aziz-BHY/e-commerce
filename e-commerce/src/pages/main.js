@@ -10,7 +10,7 @@ export default function Main() {
                 <div class="col-lg-7 offset-lg-4">
                     <div class="banner__item">
                         <div class="banner__item__pic">
-                            <img src="img/banner/banner-1.jpg" alt="" />
+                            <img src="/img/banner/banner-1.jpg" alt="" />
                         </div>
                         <div class="banner__item__text">
                             <h2>Best C2C Platform</h2>

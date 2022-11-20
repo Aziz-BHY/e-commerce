@@ -22,7 +22,7 @@ export default function Header() {
             <div class="row">
                 <div class="col-lg-3 col-md-3">
                     <div class="header__logo">
-                        <a href="/"><img src="img/logo.png" alt="" /></a>
+                        <a href="/"><img src="/img/logo.png" alt="" /></a>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
@@ -42,8 +42,8 @@ export default function Header() {
                 </div>
                 <div class="col-lg-3 col-md-3">
                     <div class="header__nav__option">
-                        <a href="/product" class="search-switch"><img src="img/icon/search.png" alt="" /></a>
-                        <a href="/inventory"><img src="img/icon/cart.png" alt="" /> <span>0</span></a>
+                        <a href="/product" class="search-switch"><img src="/img/icon/search.png" alt="" /></a>
+                        <a href="/inventory"><img src="/img/icon/cart.png" alt="" /> <span>0</span></a>
                         <div class="price">0.00TND</div>
                     </div>
                 </div>

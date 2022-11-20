@@ -2557,13 +2557,16 @@ ol {
 .checkout__input p span {
 	color: #e53637;
 }
-
+.vl {
+	border-left: 3px solid rgba(41, 39, 39, 0.137);
+	height: 900px;
+  }
 .checkout__input input {
 	height: 50px;
 	width: 100%;
 	border: 1px solid #e1e1e1;
 	font-size: 14px;
-	color: #b7b7b7;
+	color: #646363;
 	padding-left: 20px;
 	margin-bottom: 20px;
 }

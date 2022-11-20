@@ -2,9 +2,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Main from './pages/main'
 import Sign from './pages/sign'
 import Shop from './pages/shop'
-import Product from './pages/product'
 import ProductDetail from './pages/product-detail'
-import Inventory from './pages/inventory'
+import Checkout from './pages/checkout'
+import Cart from './pages/cart'
 import Profile from './pages/profile'
 import AddProduct from './pages/add-product'
 import UpdateProduct from './pages/update-product'
@@ -36,21 +36,21 @@ function App() {
             }
           />
           <Route
-            path="/product"
-            element={
-                <Product />
-            }
-          />
-          <Route
             path="/product/:id"
             element={
                 <ProductDetail />
             }
           />
           <Route
-            path="/inventory"
+            path="/checkout"
             element={
-                <Inventory />
+                <Checkout />
+            }
+          />
+          <Route
+            path="/cart"
+            element={
+                <Cart />
             }
           />
           <Route
