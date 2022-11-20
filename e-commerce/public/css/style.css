@@ -2394,6 +2394,27 @@ ol {
 	line-height: 40px;
 	text-align: center;
 }
+.shopping__cart__table table tbody tr td.product_delete i {
+	font-size: 18px;
+	color: #ffffff;
+	height: 40px;
+	width: 40px;
+	background: #fc0404;
+	border-radius: 50%;
+	line-height: 40px;
+	text-align: center;
+}
+
+.shopping__cart__table table tbody tr td.product_update i {
+	font-size: 18px;
+	color: #ffffff;
+	height: 40px;
+	width: 40px;
+	background: #185cee;
+	border-radius: 50%;
+	line-height: 40px;
+	text-align: center;
+}
 
 .continue__btn.update__btn {
 	text-align: right;
