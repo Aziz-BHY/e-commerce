@@ -17,7 +17,7 @@ const getUserInfo = asyncHandler(async (req, res) => {
 
 const updateUser = asyncHandler(async (req, res) => {
     try {
-      const user = await User.findById(req.params.id);
+      const user = await User.findByIdAndUpdate(req.params.id, req.body);
       return res.status(200).json(user);
     } catch (error) {
       return res.status(500).json({
@@ -28,8 +28,10 @@ const updateUser = asyncHandler(async (req, res) => {
 
 const signin = asyncHandler(async (req, res) => {
     try {
-      const user = await User.findById(req.params.id);
+      const user = await User.findOne({email: req.body.email, password: req.body.password});
+      if(user)
       return res.status(200).json(user);
+      else return res.status(200).json({error: "email or password is incorrect"});
     } catch (error) {
       return res.status(500).json({
         error: error,
@@ -39,8 +41,9 @@ const signin = asyncHandler(async (req, res) => {
 
 const signup = asyncHandler(async (req, res) => {
     try {
-      const user = await User.findById(req.params.id);
-      return res.status(200).json(user);
+      const user = await User.create(req.body);
+      let token = jwt.sign({userId: user._id}, "secret")
+      return res.status(200).json({token});
     } catch (error) {
       return res.status(500).json({
         error: error,

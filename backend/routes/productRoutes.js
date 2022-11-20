@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
+const multer = require("multer");
 
+//setting options for multer
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage }).single("file");
 const {
     addProduct,
     deleteProduct,
@@ -10,11 +14,11 @@ const {
     updateProduct
 } = require("../controllers/productController");
 
-router.route("/").post(addProduct);
+router.post("/" , upload, addProduct)
 router.route("/:id").delete(deleteProduct);
 router.route("/:userId").get(getMyProducts);
 router.route("/").get(getProducts);
 router.route("/related").get(getRelatedProduct);
-router.route("/:id").put(updateProduct);
+router.route("/:id", upload , updateProduct).put(updateProduct);
 
 module.exports = router;

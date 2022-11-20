@@ -5,8 +5,8 @@ const Product = require("../models/productModel");
 
 const getProducts = asyncHandler(async (req, res) => {
   try {
-    const user = await Product.find();
-    return res.status(200).json(user);
+    const products = await Product.find();
+    return res.status(200).json(products);
   } catch (error) {
     return res.status(500).json({
       error: error,
@@ -16,8 +16,8 @@ const getProducts = asyncHandler(async (req, res) => {
 
 const getMyProducts = asyncHandler(async (req, res) => {
     try {
-      const user = await Product.findById(req.params.id);
-      return res.status(200).json(user);
+      const products = await Product.find({user: req.params.userId});
+      return res.status(200).json(products);
     } catch (error) {
       return res.status(500).json({
         error: error,
@@ -27,8 +27,8 @@ const getMyProducts = asyncHandler(async (req, res) => {
 
 const getRelatedProduct = asyncHandler(async (req, res) => {
     try {
-      const user = await Product.findById(req.params.id);
-      return res.status(200).json(user);
+      const products = await Product.find({categorie: req.body.categorie}).limit(4);
+      return res.status(200).json(products);
     } catch (error) {
       return res.status(500).json({
         error: error,
@@ -38,8 +38,8 @@ const getRelatedProduct = asyncHandler(async (req, res) => {
 
 const addProduct = asyncHandler(async (req, res) => {
     try {
-      const user = await Product.findById(req.params.id);
-      return res.status(200).json(user);
+      const product = await Product.create(req.body);
+      return res.status(200).json(product);
     } catch (error) {
       return res.status(500).json({
         error: error,
@@ -49,8 +49,8 @@ const addProduct = asyncHandler(async (req, res) => {
 
 const updateProduct = asyncHandler(async (req, res) => {
   try {
-    const user = await Product.findById(req.params.id);
-    return res.status(200).json(user);
+    const product = await Product.findByIdAndUpdate(req.params.id, req.body );
+    return res.status(200).json(product);
   } catch (error) {
     return res.status(500).json({
       error: error,
@@ -60,8 +60,8 @@ const updateProduct = asyncHandler(async (req, res) => {
 
 const deleteProduct = asyncHandler(async (req, res) => {
   try {
-    const user = await Product.findById(req.params.id);
-    return res.status(200).json(user);
+    await Product.findByIdAndDelete(req.params.id);
+    return res.status(200).json("deleted");
   } catch (error) {
     return res.status(500).json({
       error: error,
