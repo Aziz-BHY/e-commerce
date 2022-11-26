@@ -1,6 +1,15 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import Product from "../components/product-item";
 
 export default function Main() {
+  const [products, setProducts] = useState([])
+
+  useEffect(()=>{
+    axios.get("http://localhost:5000/products").then(res=>{
+      setProducts(res.data)
+    }) 
+  }, [])
   return (
     <>
       <section class="banner spad">
@@ -30,13 +39,10 @@ export default function Main() {
             </div>
           </div>
           <div class="row product__filter">
-            {[0, 0, 0, 0, 0, 0].map((product, index) => (
+            {products.map((product, index) => (
               <Product
                 key={"product" + index}
-                name={"produit" + index}
-                price={index}
-                id={index}
-                image={""}
+                product={product}
               />
             ))}
           </div>

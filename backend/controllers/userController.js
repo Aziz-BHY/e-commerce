@@ -6,7 +6,8 @@ const User = require("../models/userModel");
 
 const getUserInfo = asyncHandler(async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
+    let payload = jwt.verify(req.params.token, "secret")
+    const user = await User.findById(payload.userId);
     return res.status(200).json(user);
   } catch (error) {
     return res.status(500).json({
@@ -17,7 +18,8 @@ const getUserInfo = asyncHandler(async (req, res) => {
 
 const updateUser = asyncHandler(async (req, res) => {
     try {
-      const user = await User.findByIdAndUpdate(req.params.id, req.body);
+      let payload = jwt.verify(req.params.token, "secret")
+      const user = await User.findByIdAndUpdate(payload.userId, req.body, {new: true});
       return res.status(200).json(user);
     } catch (error) {
       return res.status(500).json({

@@ -19,7 +19,7 @@ export default function CartProduct({ product }) {
         <td
           class="product_update"
           onClick={() => {
-            window.location = "/update-product";
+            window.location = "/update-product/"+product._id;
           }}
         >
           <i class="fa fa-pencil"></i>

@@ -127,10 +127,7 @@ export default function Shop() {
                 {[0, 0, 0, 0].map((product, index) => (
                   <Product
                     key={index}
-                    name={"produit" + index}
-                    price={index * 10}
-                    id={index}
-                    image={""}
+                    product={{image: ""}}
                   />
                 ))}
               </div>

@@ -27,6 +27,17 @@ const getMyProducts = asyncHandler(async (req, res) => {
     }
 });
 
+const getProduct = asyncHandler(async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    return res.status(200).json(product);
+  } catch (error) {
+    return res.status(500).json({
+      error: error,
+    });
+  }
+});
+
 const getRelatedProduct = asyncHandler(async (req, res) => {
     try {
       const products = await Product.find({categorie: req.body.categorie}).limit(4);
@@ -54,7 +65,11 @@ const addProduct = asyncHandler(async (req, res) => {
 
 const updateProduct = asyncHandler(async (req, res) => {
   try {
-    const product = await Product.findByIdAndUpdate(req.params.id, req.body );
+    let body = {}
+    if(req.file){
+      body.image = req.file.filename
+    }
+    const product = await Product.findByIdAndUpdate(req.params.id, {...req.body, ...body}, {new: true});
     return res.status(200).json(product);
   } catch (error) {
     return res.status(500).json({
@@ -79,5 +94,6 @@ module.exports = {
     getRelatedProduct,
     addProduct,
     updateProduct,
+    getProduct,
     deleteProduct
 };

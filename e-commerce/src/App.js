@@ -27,7 +27,7 @@ function App() {
           <Route path="/myspace" element={<MyProducts />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/add-product" element={<AddProduct />} />
-          <Route path="/update-product" element={<UpdateProduct />} />
+          <Route path="/update-product/:id" element={<UpdateProduct />} />
           <Route path="*" element={<h1>Error 404 Page not found </h1>} />
         </Routes>
       </BrowserRouter>

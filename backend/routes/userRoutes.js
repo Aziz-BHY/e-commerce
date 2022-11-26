@@ -8,9 +8,9 @@ const {
     updateUser
 } = require("../controllers/userController");
 
-router.route("/:id").get(getUserInfo);
+router.route("/:token").get(getUserInfo);
 router.route("/signin").post(signin);
 router.route("/signup").post(signup);
-router.route("/:id").put(updateUser);
+router.route("/:token").put(updateUser);
 
 module.exports = router;
