@@ -16,6 +16,11 @@ export default function ProductDetail(props) {
         }
       })
     },[])
+
+    const addCart = ()=>{
+
+    } 
+    
   return (
     <div>
       <section class="shop-details">
