@@ -1,6 +1,15 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import ElProduct from "../components/element-product";
-
+import { useCookies } from "react-cookie";
 export default function MyProducts() {
+  const [cookies] = useCookies(['token']);
+  const [myProducts, setProducts] = useState([])
+  useEffect(()=>{
+    axios.get("http://localhost:5000/products/me?token="+cookies.token).then(res=>{
+      setProducts(res.data)
+    })
+  }, [])
   return (
     <section class="shopping-cart spad">
       <div class="container">
@@ -29,7 +38,9 @@ export default function MyProducts() {
                   </tr>
                 </thead>
                 <tbody>
-                  <ElProduct />
+                  {myProducts.map(product=>(
+                     <ElProduct product={product} />
+                  ))}
                 </tbody>
               </table>
             </div>

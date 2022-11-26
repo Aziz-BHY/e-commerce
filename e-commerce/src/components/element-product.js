@@ -1,12 +1,19 @@
-export default function CartProduct({ productName, price, quantity, id }) {
+import axios from "axios";
+
+export default function CartProduct({ product }) {
+  const deleteProduct = ()=>{
+    axios.delete("http://localhost:5000/products/"+product._id).then(res=>{
+      console.log("deleted")
+    })
+  }
     return (
       <tr>
         <td class="product__cart__item">
           <div class="product__cart__item__pic">
-            <img src="img/shopping-cart/cart-1.jpg" alt="" />
+            <img src={"http://localhost:5000/image/"+product.image} alt="" />
           </div>
           <div class="product__cart__item__text">
-            <h6>T-shirt Contrast Pocket</h6>
+            <h6>{product.name}</h6>
           </div>
         </td>
         <td
@@ -17,7 +24,7 @@ export default function CartProduct({ productName, price, quantity, id }) {
         >
           <i class="fa fa-pencil"></i>
         </td>
-        <td class="product_delete">
+        <td class="product_delete" onClick={deleteProduct}>
           <i class="fa fa-close"></i>
         </td>
       </tr>

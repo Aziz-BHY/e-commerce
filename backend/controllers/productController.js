@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 
 const Product = require("../models/productModel");
+const jwt = require("jsonwebtoken");
 
 
 const getProducts = asyncHandler(async (req, res) => {
@@ -16,7 +17,8 @@ const getProducts = asyncHandler(async (req, res) => {
 
 const getMyProducts = asyncHandler(async (req, res) => {
     try {
-      const products = await Product.find({user: req.params.userId});
+      let payload = jwt.verify(req.query.token, "secret")
+      const products = await Product.find({user: payload.userId});
       return res.status(200).json(products);
     } catch (error) {
       return res.status(500).json({
@@ -38,9 +40,12 @@ const getRelatedProduct = asyncHandler(async (req, res) => {
 
 const addProduct = asyncHandler(async (req, res) => {
     try {
-      const product = await Product.create(req.body);
+      let payload = jwt.verify(req.body.token, "secret")
+      const product = await Product.create({...req.body, user: payload.userId, image: req.file.filename});
+      console.log(product)
       return res.status(200).json(product);
     } catch (error) {
+      console.log(error)
       return res.status(500).json({
         error: error,
       });
