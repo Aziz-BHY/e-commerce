@@ -1,4 +1,20 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
+
 export default function Header() {
+   const [sum, setSum] = useState(0)
+   const [cookies] = useCookies(['token']);
+
+    useEffect(()=>{
+      axios.get("http://localhost:5000/cart/"+cookies.token).then(res=>{
+        let somme = 0;
+        for(let product of res.data.products){
+          somme += product.product.price*product.quantity
+        }
+        setSum(somme)
+      })
+    }, [])
     return (
       <header class="header">
         <div class="header__top">
@@ -58,7 +74,7 @@ export default function Header() {
                 <a href="/inventory">
                   <img src="/img/icon/cart.png" alt="" /> <span>0</span>
                 </a>
-                <div class="price">0.00TND</div>
+                <div class="price">{sum}TND</div>
               </div>
             </div>
           </div>

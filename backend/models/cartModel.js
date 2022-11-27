@@ -6,7 +6,8 @@ const listProductsSchema = new mongoose.Schema({
       ref: "Product"
   },
   quantity: {
-    type: Number
+    type: Number,
+    default: 0
   }
 })
 const cartSchema = new mongoose.Schema(

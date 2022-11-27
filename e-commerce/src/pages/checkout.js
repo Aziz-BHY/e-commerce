@@ -1,4 +1,22 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
+
 export default function Inventory() {
+  const [cookies] = useCookies(['token']);
+  const [products, setProducts] = useState([])
+  const [sum, setSum] = useState(0)
+  useEffect(()=>{
+     axios.get("http://localhost:5000/cart/"+cookies.token).then(res=>{
+       setProducts(res.data.products)
+       let somme = 0;
+       for(let product of res.data.products){
+         somme += product.product.price*product.quantity
+       }
+       setSum(somme)
+     })
+    
+   }, [])
     return (
       <div>
         <section class="breadcrumb-option">
@@ -37,20 +55,21 @@ export default function Inventory() {
                       </div>
                       <br />
                       <ul class="checkout__total__products">
-                        <li class="row">
-                          {" "}
+                        {products.map((product, index)=>(
+                          <li class="row">
                           {/*Vanilla salted caramel <span>$ 300.0</span>*/}
-                          <div class="col-lg-2 col-md-6">2</div>
-                          <div class="col-lg-4 col-md-6">Produit1</div>
-                          <div class="col-lg-2 col-md-6">100</div>
+                          <div class="col-lg-2 col-md-6">{product.quantity}</div>
+                          <div class="col-lg-4 col-md-6">{product.product.name}</div>
+                          <div class="col-lg-2 col-md-6">{product.product.price}</div>
                           <div class="col-lg-4 col-md-6 ">
-                            <span style={{ right: "0px" }}>200</span>
+                            <span style={{ right: "0px" }}>{product.product.price*product.quantity}</span>
                           </div>
                         </li>
+                        ))}
                       </ul>
                       <ul class="checkout__total__all">
                         <li>
-                          Total <span>$750.99</span>
+                          Total <span>{sum} TND</span>
                         </li>
                       </ul>
                       <button class="site-btn">PLACE ORDER</button>

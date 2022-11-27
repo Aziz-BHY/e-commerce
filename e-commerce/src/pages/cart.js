@@ -1,6 +1,40 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 import CartProduct from "../components/cart-product";
 
 export default function Cart() {
+  const [cookies] = useCookies(['token']);
+  const [products, setProducts] = useState([])
+  const [sum, setSum] = useState(0)
+  useEffect(()=>{
+     axios.get("http://localhost:5000/cart/"+cookies.token).then(res=>{
+       setProducts(res.data.products)
+     })
+   }, [])
+   useEffect(()=>{
+    let somme = 0;
+    for(let product of products){
+      somme += product.product.price*product.quantity
+    }
+    setSum(somme)
+   }, [products])
+
+   const updateQuantity = (index, qte)=>{
+    let varProd = [...products];
+    varProd[index].quantity += qte;
+    setProducts(varProd)
+   }
+   const deleteProduct = (index)=>{
+    let varProd = [...products];
+    varProd.splice(index, 1)
+    setProducts(varProd)
+   }
+   const updateCart = ()=>{
+    axios.put("http://localhost:5000/cart/"+cookies.token, products).then(res=>{
+      console.log(res)
+    })
+   }
   return (
     <div>
       <section class="breadcrumb-option">
@@ -35,7 +69,9 @@ export default function Cart() {
                     </tr>
                   </thead>
                   <tbody>
-                    <CartProduct />
+                    {products.map((product, index)=>(
+                      <CartProduct product={product} updateQuantity={updateQuantity} index={index} deleteProduct={deleteProduct}/>
+                    ))}
                   </tbody>
                 </table>
               </div>
@@ -46,9 +82,9 @@ export default function Cart() {
                   </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">
-                  <div class="continue__btn update__btn">
-                    <a href="#">
-                      <i class="fa fa-spinner"></i> Update cart
+                  <div class="continue__btn update__btn" onClick={updateCart}>
+                    <a >
+                      <i class="fa fa-spinner" ></i> Update cart
                     </a>
                   </div>
                 </div>
@@ -59,10 +95,7 @@ export default function Cart() {
                 <h6>Cart total</h6>
                 <ul>
                   <li>
-                    Subtotal <span>$ 169.50</span>
-                  </li>
-                  <li>
-                    Total <span>$ 169.50</span>
+                    Total <span>{sum}TND</span>
                   </li>
                 </ul>
                 <a href="#" class="primary-btn">

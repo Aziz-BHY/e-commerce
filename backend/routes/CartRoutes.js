@@ -3,10 +3,12 @@ const router = express.Router();
 
 const {
     getCart,
-    updateCart
+    updateCart,
+    addToCart
 } = require("../controllers/cartController");
 
-router.route("/:userId").get(getCart);
-router.route("/:userId").put(updateCart);
+router.route("/:token").get(getCart);
+router.route("/add/:token").put(addToCart);
+router.route("/:token").put(updateCart);
 
 module.exports = router;

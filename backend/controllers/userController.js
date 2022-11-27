@@ -2,6 +2,7 @@ const asyncHandler = require("express-async-handler");
 const jwt = require("jsonwebtoken");
 
 const User = require("../models/userModel");
+const Cart = require("../models/cartModel");
 
 
 const getUserInfo = asyncHandler(async (req, res) => {
@@ -51,6 +52,7 @@ const signup = asyncHandler(async (req, res) => {
       }else{
         user = await User.create(req.body);
         let token = jwt.sign({userId: user._id}, "secret")
+        await Cart.create({user: user._id});
       return res.status(200).json({token}); 
       }
       

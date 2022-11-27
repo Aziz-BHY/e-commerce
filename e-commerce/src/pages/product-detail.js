@@ -2,11 +2,14 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Product from "../components/product-item";
 import { useParams } from 'react-router-dom';
-
+import { useCookies } from 'react-cookie';
+ 
 export default function ProductDetail(props) {
   const {id} = useParams();
   const [product, setProduct] = useState({})
-  const [quanity, setQuantity] = useState(1)
+  const [quantity, setQuantity] = useState(1)
+  const [cookies] = useCookies(['token']);
+
   useEffect(()=>{
     axios.get("http://localhost:5000/products/"+id).then(res=>{
         if(res.data._id){
@@ -18,7 +21,12 @@ export default function ProductDetail(props) {
     },[])
 
     const addCart = ()=>{
+        axios.put("http://localhost:5000/cart/add/"+cookies.token, {
+          product: id,
+          quantity: quantity
+        }).then(res=>{
 
+        })
     } 
     
   return (
@@ -62,10 +70,10 @@ export default function ProductDetail(props) {
                   <div class="product__details__cart__option">
                     <div class="quantity">
                       <div class="pro-qty">
-                        <input type="text" value={quanity} onChange={e=>setQuantity(e.target.value)} />
+                        <input type="text" value={quantity} onChange={e=>setQuantity(e.target.value)} />
                       </div>
                     </div>
-                    <a href="#" class="primary-btn">
+                    <a href="#" class="primary-btn" onClick={addCart}>
                       add to cart
                     </a>
                   </div>
