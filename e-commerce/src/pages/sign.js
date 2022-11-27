@@ -1,6 +1,15 @@
+import { useEffect } from "react";
+import { useCookies } from "react-cookie";
 import Signin from "../components/signin";
 import Signup from "../components/signup";
 export default function Sign() {
+  const [cookies] = useCookies(['token']);
+
+  useEffect(()=>{
+    if(cookies.token){
+      window.location = "/"
+    }
+  }, [])
   return (
     <div>
       <section class="breadcrumb-option">

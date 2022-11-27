@@ -4,7 +4,7 @@ import { useCookies } from "react-cookie";
 
 export default function Header() {
    const [sum, setSum] = useState(0)
-   const [cookies] = useCookies(['token']);
+   const [cookies, setCookie, removeCookie] = useCookies(['token']);
 
     useEffect(()=>{
       axios.get("http://localhost:5000/cart/"+cookies.token).then(res=>{
@@ -24,7 +24,11 @@ export default function Header() {
               <div class="col-lg-6 col-md-5">
                 <div class="header__top__right">
                   <div class="header__top__links">
+                  {cookies.token?
+                    <a href="/" onClick={()=>{removeCookie("token")}}>Disconnect</a>
+                    :
                     <a href="/sign">Sign in</a>
+                  }
                   </div>
                 </div>
               </div>
@@ -49,32 +53,40 @@ export default function Header() {
                   <li>
                     <a href="/shop">Shop</a>
                   </li>
-                  <li>
+                  {cookies.token?<li>
                     <a href="#">Pages</a>
                     <ul class="dropdown">
                       <li>
                         <a href="/shop">Shop</a>
                       </li>
+                      
                       <li>
                         <a href="/cart">Shopping Cart</a>
                       </li>
                       <li>
-                        <a href="/profile">My Space</a>
+                        <a href="/myspace">My Space</a>
+                      </li>
+                      <li>
+                        <a href="/profile">My Profile</a>
                       </li>
                     </ul>
-                  </li>
+                  </li>:<></>}
+                  
                 </ul>
               </nav>
             </div>
             <div class="col-lg-3 col-md-3">
               <div class="header__nav__option">
-                <a href="/product" class="search-switch">
-                  <img src="/img/icon/search.png" alt="" />
-                </a>
-                <a href="/inventory">
-                  <img src="/img/icon/cart.png" alt="" /> <span>0</span>
+                {cookies.token?
+                <>
+                <a href="/cart">
+                <img src="/img/icon/cart.png" alt="" /> <span></span>
                 </a>
                 <div class="price">{sum}TND</div>
+
+                </>  : <></>
+                }
+                
               </div>
             </div>
           </div>

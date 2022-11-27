@@ -14,7 +14,11 @@ export default function Profile() {
   const [cookies, setCookie] = useCookies(['token']);
 
   useEffect(()=>{
+    if(!cookies.token){
+      window.location = "/"
+    }
     axios.get("http://localhost:5000/users/"+cookies.token).then(res=>{
+      if(!res.data._id) window.location="/"
     setFirstName(res.data.firstName);
     setLastName(res.data.lastName)
     setAdress(res.data.adress);

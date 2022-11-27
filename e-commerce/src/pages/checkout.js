@@ -7,6 +7,9 @@ export default function Inventory() {
   const [products, setProducts] = useState([])
   const [sum, setSum] = useState(0)
   useEffect(()=>{
+    if(!cookies.token){
+      window.location = "/"
+    }
      axios.get("http://localhost:5000/cart/"+cookies.token).then(res=>{
        setProducts(res.data.products)
        let somme = 0;

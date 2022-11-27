@@ -1,11 +1,7 @@
 import axios from "axios";
 
-export default function CartProduct({ product }) {
-  const deleteProduct = ()=>{
-    axios.delete("http://localhost:5000/products/"+product._id).then(res=>{
-      console.log("deleted")
-    })
-  }
+export default function CartProduct({ product, deleteProduct, index}) {
+  
     return (
       <tr>
         <td class="product__cart__item">
@@ -24,7 +20,7 @@ export default function CartProduct({ product }) {
         >
           <i class="fa fa-pencil"></i>
         </td>
-        <td class="product_delete" onClick={deleteProduct}>
+        <td class="product_delete" onClick={()=>deleteProduct(index)}>
           <i class="fa fa-close"></i>
         </td>
       </tr>

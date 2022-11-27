@@ -6,10 +6,20 @@ export default function MyProducts() {
   const [cookies] = useCookies(['token']);
   const [myProducts, setProducts] = useState([])
   useEffect(()=>{
+    if(!cookies.token){
+      window.location = "/"
+    }
     axios.get("http://localhost:5000/products/me?token="+cookies.token).then(res=>{
       setProducts(res.data)
     })
   }, [])
+  const deleteProduct = (index)=>{
+    axios.delete("http://localhost:5000/products/"+myProducts[index]._id).then(res=>{
+      let varProducts = [...myProducts];
+      varProducts.splice(index, 1);
+      setProducts(varProducts)
+    })
+  }
   return (
     <section class="shopping-cart spad">
       <div class="container">
@@ -38,8 +48,8 @@ export default function MyProducts() {
                   </tr>
                 </thead>
                 <tbody>
-                  {myProducts.map(product=>(
-                     <ElProduct product={product} />
+                  {myProducts.map((product, index)=>(
+                     <ElProduct product={product} deleteProduct={deleteProduct} index={index} />
                   ))}
                 </tbody>
               </table>

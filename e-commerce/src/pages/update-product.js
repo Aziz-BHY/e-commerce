@@ -16,6 +16,9 @@ export default function UpdateProduct() {
     const [cookies] = useCookies(['token']);
 
     useEffect(()=>{
+      if(!cookies.token){
+        window.location = "/"
+      }
       axios.get("http://localhost:5000/products/"+id).then(res=>{
         if(res.data._id){
           setName(res.data.name);
@@ -24,7 +27,7 @@ export default function UpdateProduct() {
           setPrice(res.data.price);
           setCategorie(res.data.categorie);
         }else{
-
+          window.location="/myspace"
         }
       })
     },[])

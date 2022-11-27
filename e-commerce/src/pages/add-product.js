@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useCookies } from "react-cookie"
 import axios from 'axios'
 export default function AddProduct() {
@@ -9,7 +9,11 @@ export default function AddProduct() {
   const [price , setPrice] = useState(0)
   const [categorie, setCategorie] = useState("")
   const [cookies] = useCookies(['token']);
-
+  useEffect(()=>{
+    if(!cookies.token){
+      window.location = "/"
+    }
+  }, [])
   const create = ()=>{
     const formData = new FormData()
     formData.append("name", name)
@@ -25,7 +29,11 @@ export default function AddProduct() {
       },
   }
     axios.post("http://localhost:5000/products", formData, config).then(res=>{
-      console.log(res.data)
+      if(res.data._id){
+        window.location="/myspace"
+      }else{
+        alert("server error")
+      }
     })
   }
     return (

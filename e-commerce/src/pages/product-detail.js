@@ -15,7 +15,7 @@ export default function ProductDetail(props) {
         if(res.data._id){
           setProduct(res.data)
         }else{
-
+          window.location = "/shop"
         }
       })
     },[])
