@@ -11,6 +11,7 @@ import UpdateProduct from "./pages/update-product";
 import Header from "./components/header";
 import Footer from "./components/footer";
 import MyProducts from "./pages/my-product";
+import Payment from "./pages/payment";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/add-product" element={<AddProduct />} />
           <Route path="/update-product/:id" element={<UpdateProduct />} />
+          <Route path="/payment" element={<Payment />} />
           <Route path="*" element={<h1>Error 404 Page not found </h1>} />
         </Routes>
       </BrowserRouter>

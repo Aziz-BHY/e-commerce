@@ -25,7 +25,7 @@ export default function Cart() {
 
    const updateQuantity = (index, qte)=>{
     let varProd = [...products];
-    varProd[index].quantity += qte;
+    varProd[index].quantity= Number.parseInt(varProd[index].quantity) + Number.parseInt(qte);
     setProducts(varProd)
    }
    const deleteProduct = (index)=>{
@@ -33,9 +33,14 @@ export default function Cart() {
     varProd.splice(index, 1)
     setProducts(varProd)
    }
+   const updateQte = (index, value)=>{
+    let varProd = [...products];
+    varProd[index].quantity = Number.parseInt(value)
+    setProducts(varProd)
+   }
    const updateCart = ()=>{
     axios.put("http://localhost:5000/cart/"+cookies.token, products).then(res=>{
-      console.log(res)
+      window.location = "/cart"
     })
    }
   return (
@@ -47,8 +52,8 @@ export default function Cart() {
               <div class="breadcrumb__text">
                 <h4>Shopping Cart</h4>
                 <div class="breadcrumb__links">
-                  <a href="./index.html">Home</a>
-                  <a href="./shop.html">Shop</a>
+                  <a href="/">Home</a>
+                  <a href="/shop">Shop</a>
                   <span>Shopping Cart</span>
                 </div>
               </div>
@@ -73,7 +78,7 @@ export default function Cart() {
                   </thead>
                   <tbody>
                     {products.map((product, index)=>(
-                      <CartProduct product={product} updateQuantity={updateQuantity} index={index} deleteProduct={deleteProduct}/>
+                      <CartProduct product={product} updateQte={updateQte} updateQuantity={updateQuantity} index={index} deleteProduct={deleteProduct}/>
                     ))}
                   </tbody>
                 </table>
@@ -81,7 +86,7 @@ export default function Cart() {
               <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6">
                   <div class="continue__btn">
-                    <a href="#">Continue Shopping</a>
+                    <a href="/shop">Continue Shopping</a>
                   </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">
@@ -101,7 +106,7 @@ export default function Cart() {
                     Total <span>{sum}TND</span>
                   </li>
                 </ul>
-                <a href="#" class="primary-btn">
+                <a href="/checkout" class="primary-btn">
                   Proceed to checkout
                 </a>
               </div>

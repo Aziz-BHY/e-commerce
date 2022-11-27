@@ -26,7 +26,7 @@ const {
 router.post("/" , upload, addProduct)
 router.route("/:id").delete(deleteProduct);
 router.route("/").get(getProducts);
-router.route("/related").get(getRelatedProduct);
+router.route("/related/:categorie").get(getRelatedProduct);
 router.route("/me").get(getMyProducts);
 router.route("/:id").get(getProduct);
 router.put("/:id", upload, updateProduct)

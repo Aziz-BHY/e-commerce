@@ -90,7 +90,7 @@ export default function AddProduct() {
                     </p>
                     <input type="text" value={categorie} onChange={e=>setCategorie(e.target.value)}/>
                   </div>
-                  <button class="site-btn" onClick={create}>Update Profile</button>
+                  <button class="site-btn" onClick={create}>Add New Product</button>
                 </div>
               </div>
           </div>

@@ -1156,11 +1156,11 @@ ol {
 	margin-bottom: 45px;
 }
 
-.shop__sidebar__search form {
+.shop__sidebar__search  {
 	position: relative;
 }
 
-.shop__sidebar__search form input {
+.shop__sidebar__search  input {
 	width: 100%;
 	font-size: 15px;
 	color: #b7b7b7;
@@ -1169,27 +1169,27 @@ ol {
 	height: 42px;
 }
 
-.shop__sidebar__search form input::-webkit-input-placeholder {
+.shop__sidebar__search  input::-webkit-input-placeholder {
 	color: #b7b7b7;
 }
 
-.shop__sidebar__search form input::-moz-placeholder {
+.shop__sidebar__search  input::-moz-placeholder {
 	color: #b7b7b7;
 }
 
-.shop__sidebar__search form input:-ms-input-placeholder {
+.shop__sidebar__search  input:-ms-input-placeholder {
 	color: #b7b7b7;
 }
 
-.shop__sidebar__search form input::-ms-input-placeholder {
+.shop__sidebar__search input::-ms-input-placeholder {
 	color: #b7b7b7;
 }
 
-.shop__sidebar__search form input::placeholder {
+.shop__sidebar__search  input::placeholder {
 	color: #b7b7b7;
 }
 
-.shop__sidebar__search form button {
+.shop__sidebar__search button {
 	color: #b7b7b7;
 	font-size: 15px;
 	border: none;

@@ -8,12 +8,16 @@ export default function ProductDetail(props) {
   const {id} = useParams();
   const [product, setProduct] = useState({})
   const [quantity, setQuantity] = useState(1)
+  const [related, setRelated] = useState([])
   const [cookies] = useCookies(['token']);
 
   useEffect(()=>{
     axios.get("http://localhost:5000/products/"+id).then(res=>{
         if(res.data._id){
           setProduct(res.data)
+          axios.get("http://localhost:5000/products/related/"+res.data.categorie).then(relatedRes=>{
+            setRelated(relatedRes.data)
+          })
         }else{
           window.location = "/shop"
         }
@@ -25,7 +29,7 @@ export default function ProductDetail(props) {
           product: id,
           quantity: quantity
         }).then(res=>{
-
+          window.location = "/shop"
         })
     } 
     
@@ -37,8 +41,8 @@ export default function ProductDetail(props) {
             <div class="row">
               <div class="col-lg-12">
                 <div class="product__details__breadcrumb">
-                  <a href="./index.html">Home</a>
-                  <a href="./shop.html">Shop</a>
+                  <a href="/">Home</a>
+                  <a href="/shop">Shop</a>
                   <span>Product Details</span>
                 </div>
               </div>
@@ -100,10 +104,10 @@ export default function ProductDetail(props) {
             </div>
           </div>
           <div class="row">
-            {[0, 0, 0, 0].map((product, index) => (
+            {related.map((product, index) => (
               <Product
                 key={"product" + index}
-                product={{}}
+                product={product}
               />
             ))}
           </div>

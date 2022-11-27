@@ -6,7 +6,11 @@ const jwt = require("jsonwebtoken");
 
 const getProducts = asyncHandler(async (req, res) => {
   try {
-    const products = await Product.find();
+    let searchObj = {}
+    searchObj = req.query.search? {...searchObj, name: req.query.search}: searchObj 
+    searchObj = req.query.categorie? {...searchObj, categorie: req.query.categorie}: searchObj 
+    searchObj = req.query.minprice? {...searchObj, price: {$gte: req.query.minprice, $lte: req.query.maxprice}}: searchObj 
+    const products = await Product.find(searchObj).sort({price: req.query.order?req.query.order:1});
     return res.status(200).json(products);
   } catch (error) {
     return res.status(500).json({
@@ -40,7 +44,7 @@ const getProduct = asyncHandler(async (req, res) => {
 
 const getRelatedProduct = asyncHandler(async (req, res) => {
     try {
-      const products = await Product.find({categorie: req.body.categorie}).limit(4);
+      const products = await Product.find({categorie: req.params.categorie}).limit(4);
       return res.status(200).json(products);
     } catch (error) {
       return res.status(500).json({
@@ -53,10 +57,8 @@ const addProduct = asyncHandler(async (req, res) => {
     try {
       let payload = jwt.verify(req.body.token, "secret")
       const product = await Product.create({...req.body, user: payload.userId, image: req.file.filename});
-      console.log(product)
       return res.status(200).json(product);
     } catch (error) {
-      console.log(error)
       return res.status(500).json({
         error: error,
       });

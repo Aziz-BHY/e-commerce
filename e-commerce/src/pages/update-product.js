@@ -47,7 +47,7 @@ export default function UpdateProduct() {
         },
       }
       axios.put("http://localhost:5000/products/"+id, formData, config).then(res=>{
-        console.log(res.data)
+        window.location = "/myspace"
       })
     }
     return (
@@ -56,7 +56,7 @@ export default function UpdateProduct() {
           <div class="checkout__form">
               <div class="row">
                 <div class="col-lg-12 col-md-6">
-                  <h6 class="checkout__title">Add Product</h6>
+                  <h6 class="checkout__title">Update Product</h6>
                   <div class="row">
                     <div class="col-lg-6">
                       <div class="checkout__input">
@@ -104,7 +104,7 @@ export default function UpdateProduct() {
                     </p>
                     <input type="text" value={categorie} onChange={e=>setCategorie(e.target.value)}/>
                   </div>
-                  <button class="site-btn" onClick={updateProd} >Update Profile</button>
+                  <button class="site-btn" onClick={updateProd} >Update Product</button>
                 </div>
               </div>
           </div>

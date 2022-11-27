@@ -1,6 +1,29 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import Product from "../components/product-item";
-
+import {useSearchParams} from 'react-router-dom'
+let categories = ["shoes", "pants", "t-shirt", "socks"];
 export default function Shop() {
+  const [products, setProducts] = useState([])
+  const [selectedCategorie, setSelectedCategorie] = useState(null);
+  const [selectedPrice, setSelectedPrice] = useState(null);
+  const [search, setSearch] = useState("")
+  const [order, setOrder] = useState(1)
+  const [searchParams] = useSearchParams();
+
+  const nav = ()=>{
+    let url = "/shop?order="+order+"&"
+    if(search) url += "search="+search+"&"
+    if(selectedCategorie != null) url += "categorie="+categories[selectedCategorie]+"&"
+    if(selectedPrice != null) url += "minprice="+(selectedPrice*50)+"&maxprice="+(selectedPrice*50+50)
+    window.location = url
+  }
+
+  useEffect(()=>{
+    axios.get("http://localhost:5000/products"+window.location.search).then(res=>{
+      setProducts(res.data)
+    })
+  }, [])
   return (
     <div>
       <section class="breadcrumb-option">
@@ -25,12 +48,10 @@ export default function Shop() {
             <div class="col-lg-3">
               <div class="shop__sidebar">
                 <div class="shop__sidebar__search">
-                  <form action="#">
-                    <input type="text" placeholder="Search..." />
-                    <button type="submit">
+                    <input type="text" placeholder="Search..." value={search} onChange={e=>{setSearch(e.target.value)}} />
+                    <button onClick={nav}>
                       <span class="icon_search"></span>
                     </button>
-                  </form>
                 </div>
                 <div class="shop__sidebar__accordion">
                   <div class="accordion" id="accordionExample">
@@ -48,15 +69,11 @@ export default function Shop() {
                         <div class="card-body">
                           <div class="shop__sidebar__categories">
                             <ul class="nice-scroll">
-                              <li>
-                                <a href="#">Men</a>
-                              </li>
-                              <li>
-                                <a href="#">Women</a>
-                              </li>
-                              <li>
-                                <a href="#">Bags</a>
-                              </li>
+                              {categories.map((categorie, index)=>(
+                                <li onClick={()=>setSelectedCategorie(index)}>
+                                  <a style={selectedCategorie == index?{color: "#111111"}: {}}>{categorie}</a>
+                                </li>
+                              ))}
                             </ul>
                           </div>
                         </div>
@@ -77,23 +94,23 @@ export default function Shop() {
                         <div class="card-body">
                           <div class="shop__sidebar__price">
                             <ul>
-                              <li>
-                                <a href="#">$0.00 - $50.00</a>
+                              <li onClick={()=>setSelectedPrice(0)}>
+                                <a  style={selectedPrice == 0?{color: "#111111"}: {}}>$0.00 - $50.00</a>
                               </li>
-                              <li>
-                                <a href="#">$50.00 - $100.00</a>
+                              <li onClick={()=>setSelectedPrice(1)}>
+                                <a style={selectedPrice == 1?{color: "#111111"}: {}}>$50.00 - $100.00</a>
                               </li>
-                              <li>
-                                <a href="#">$100.00 - $150.00</a>
+                              <li onClick={()=>setSelectedPrice(2)}>
+                                <a style={selectedPrice == 2?{color: "#111111"}: {}}>$100.00 - $150.00</a>
                               </li>
-                              <li>
-                                <a href="#">$150.00 - $200.00</a>
+                              <li onClick={()=>setSelectedPrice(3)}>
+                                <a style={selectedPrice == 3?{color: "#111111"}: {}}>$150.00 - $200.00</a>
                               </li>
-                              <li>
-                                <a href="#">$200.00 - $250.00</a>
+                              <li onClick={()=>setSelectedPrice(4)}>
+                                <a style={selectedPrice == 4?{color: "#111111"}: {}}>$200.00 - $250.00</a>
                               </li>
-                              <li>
-                                <a href="#">250.00+</a>
+                              <li onClick={()=>setSelectedPrice(5)}>
+                                <a style={selectedPrice == 5?{color: "#111111"}: {}}>250.00+</a>
                               </li>
                             </ul>
                           </div>
@@ -109,29 +126,28 @@ export default function Shop() {
                 <div class="row">
                   <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="shop__product__option__left">
-                      <p>Showing 1–12 of 126 results</p>
+                      <p>Showing {products.length} results</p>
                     </div>
                   </div>
                   <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="shop__product__option__right">
                       <p>Sort by Price:</p>
-                      <select>
-                        <option value="">Low To High</option>
-                        <option value="">High To Low</option>
+                      <select onChange={e=>{setOrder(e.target.value)}}>
+                        <option value="1">Low To High</option>
+                        <option value="-1">High To Low</option>
                       </select>
                     </div>
                   </div>
                 </div>
               </div>
               <div class="row">
-                {[0, 0, 0, 0].map((product, index) => (
+                {products.map((product, index) => (
                   <Product
                     key={index}
-                    product={{image: ""}}
-                  />
+                    product={product}                  />
                 ))}
               </div>
-              <div class="row">
+              {/*<div class="row">
                 <div class="col-lg-12">
                   <div class="product__pagination">
                     <a class="active" href="#">
@@ -143,7 +159,7 @@ export default function Shop() {
                     <a href="#">21</a>
                   </div>
                 </div>
-              </div>
+              </div>*/}
             </div>
           </div>
         </div>

@@ -5,7 +5,7 @@ export default function Product({ product }) {
           <div class="product__item__pic"><img src={"http://localhost:5000/image/"+product.image} alt="" /></div>
           <div class="product__item__text">
             <h6>{product.name}</h6>
-            <a href="#" class="add-cart">
+            <a href={"/product/"+product._id} class="add-cart">
               + Add To Cart
             </a>
             <h5>{product.price}TND</h5>

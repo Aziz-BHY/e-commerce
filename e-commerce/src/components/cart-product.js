@@ -1,4 +1,4 @@
-export default function CartProduct({ product, updateQuantity, index, deleteProduct }) {
+export default function CartProduct({ product, updateQuantity, index, deleteProduct, updateQte }) {
     return (
       <tr>
         <td class="product__cart__item">
@@ -14,7 +14,7 @@ export default function CartProduct({ product, updateQuantity, index, deleteProd
           <div class="quantity">
             <div class="pro-qty-2">
               <span class="fa fa-angle-left inc qtybtn" onClick={()=>updateQuantity(index, -1)}></span>
-              <input type="text" value={product.quantity} />
+              <input type="number" value={product.quantity} min="1" onChange={e=>updateQte(index, e.target.value)} />
               <span class="fa fa-angle-right inc qtybtn" onClick={()=>updateQuantity(index, 1)}></span>
             </div>
           </div>

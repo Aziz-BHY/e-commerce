@@ -6,6 +6,7 @@ export default function Inventory() {
   const [cookies] = useCookies(['token']);
   const [products, setProducts] = useState([])
   const [sum, setSum] = useState(0)
+  const [token, setToken] = useState("")
   useEffect(()=>{
     if(!cookies.token){
       window.location = "/"
@@ -17,6 +18,18 @@ export default function Inventory() {
          somme += product.product.price*product.quantity
        }
        setSum(somme)
+       axios.post("https://sandbox.paymee.tn/api/v1/payments/create",{
+        "vendor": 1862,
+        "amount": somme,
+        "note" : "Order #1000132"
+     }, {
+      headers: {
+        'Authorization': 'Token 6959e271e6ace674ee06e8790ee8d059abb5076c'
+      }
+     }).then(paymeeRes=>{
+      if(paymeeRes.data.message == "Success")
+      setToken(paymeeRes.data.data.token)
+     })
      })
     
    }, [])
@@ -75,7 +88,12 @@ export default function Inventory() {
                           Total <span>{sum} TND</span>
                         </li>
                       </ul>
-                      <button class="site-btn">PLACE ORDER</button>
+                      <form method="post" action="https://sandbox.paymee.tn/gateway/">
+                        <input type="hidden" name="payment_token" value={token} />
+                        <input type="hidden" name="url_ok" value="http://localhost:3000/payment" />
+                        <input type="hidden" name="url_ko" value="http://localhost:3000/checkout" />
+                        <button class="site-btn">PLACE ORDER</button>
+                      </form>
                     </div>
                   </div>
                 </div>
