@@ -42,9 +42,10 @@ export default function MyProducts() {
               <table>
                 <thead>
                   <tr>
-                    <th>Product</th>
-                    <th>Update</th>
-                    <th>Delete</th>
+                    <th className="col-md-4">Product</th>
+                    <th className="col-md-4"></th>
+                    <th className="col-md-2">Update</th>
+                    <th className="col-md-2">Delete</th>
                   </tr>
                 </thead>
                 <tbody>
